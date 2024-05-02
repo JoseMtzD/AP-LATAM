@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 1.2</title>
+</head>
+<body>
+    
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function(event) {
+            console.log("Ready...!");
+
+            //Tomando en cuenta que la url sería: /index2.html/?ID=11552&value=example&data=queries
+            var currentUrl = "";
+            var id = "";
+            var value = "";
+            var data = "";
+            var cookies_array = [];
+            var id_cookie = "";
+            
+            currentUrl = window.location.href;
+            
+            var url = new URL(currentUrl); 
+            
+            id = url.searchParams.get("ID");
+            value = url.searchParams.get("value");
+            data = url.searchParams.get("data");
+            
+            cookies_array["ID"] = id; 
+            cookies_array["value"] = value;
+            cookies_array["data"] = data;
+            
+            const currentDate = new Date();
+            
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            
+            var dateString = currentDate.toGMTString();           
+            
+            console.log(document.cookie);
+            
+            function setCookie(nombre_cookie, value_cookie, exdays) {
+                document.cookie = nombre_cookie + "=" + value_cookie + ";" + "expires" + ";" + currentDate;
+            }
+            
+            
+            function getCookie(cname) {
+            let name = cname + "=";
+            let ca = document.cookie.split(';');
+            for(let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+            }
+            
+            //id_check = getCookie("ID");
+            //console.log(id_check);
+            
+            function checkCookie() {
+                let id_check = getCookie("ID");
+                let data_check = getCookie("data");
+                if (id_check != "" && data_check != "") {
+                    alert("Bienvenido, el ID es: " + id_check + " y data: " + data_check + " ya existen!!!");
+                } else {
+                    if (cookies_array["ID"] != "" && cookies_array["ID"] != null) {
+                        for (var cookie in cookies_array) {
+                            setCookie(cookie, cookies_array[cookie], currentDate);    
+                        }   
+                    }
+                }
+            }
+
+            checkCookie();
+        });
+    </script>
+</body>
+</html>

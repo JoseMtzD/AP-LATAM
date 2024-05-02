@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 1.3</title>
+</head>
+<body>
+    
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function(event) {
+            console.log("Ready...!");
+
+            //Tomando en cuenta que la url sería: /index3.html/?ID=11552&value=example&data=queries
+            var currentUrl = "";
+            var session_array = [];
+            var id = "";
+            var value = "";
+            var data = "";
+
+            currentUrl = window.location.href;
+            
+            var url = new URL(currentUrl); 
+
+            id = url.searchParams.get("ID");
+            value = url.searchParams.get("value");
+            data = url.searchParams.get("data");
+
+
+            session_array["ID"] = id;
+            session_array["value"] = value;
+            session_array["data"] = data;     
+    
+            
+            function checkSessionStorage() {
+                let id_storage = sessionStorage.getItem("ID");
+                let data_storage = sessionStorage.getItem("data");
+                if(id_storage != "" && data_storage != "" && id_storage != null &&  data_storage != null){
+                    alert("SessionStorage ID es: " + id_storage + " y tu SessionStorage data es: " + data_storage)
+                } else {
+                    if (session_array["ID"] != "" && session_array["ID"] != null) {
+                        sessionStorage.setItem("ID", session_array["ID"]);  
+                        sessionStorage.setItem("value", session_array["value"]);  
+                        sessionStorage.setItem("data", session_array["data"]);
+                    }
+                }
+            }
+
+            console.log(sessionStorage);
+
+            checkSessionStorage();
+        });
+    </script>
+</body>
+</html>

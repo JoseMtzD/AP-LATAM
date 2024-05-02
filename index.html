@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 1.1</title>
+</head>
+<body>
+    
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function(event) {
+            console.log("Ready...!");
+
+            //Tomando en cuenta que la url sería: /index.html/?ID=11552&value=example&data=queries
+            var currentUrl = "";
+            var id = "";
+            var value = "";
+            var data = "";
+            
+            //Accedemos al objeto window para obtener la url
+            currentUrl = window.location.href; 
+
+            //Se crea un nuevo objeto URL y le pasamos cómo parámetro la url ya obtenida y podamos obtener los atributos
+            var url = new URL(currentUrl); 
+
+            //Obtenenemos las variables de la URL por GET
+            id = url.searchParams.get("ID"); 
+            value = url.searchParams.get("value");
+            data = url.searchParams.get("data");
+
+            // Se crea un nuevo objeto Date con la fecha actual.
+            const currentDate = new Date(); 
+
+            //Obtengo el mes actual y le sumo 1
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            
+            //currentDate.setMinutes(currentDate.getMinutes() + 5);
+
+            //Obtenemos la fecha y la convertimos al formato GMT (Centro)
+            var dateString = currentDate.toGMTString();           
+
+            //Creamos las variables para después almacenarlas en la cookie
+            var cookieString1 = "ID=" + id + "; expires="  + dateString;
+            var cookieString2 = "value=" + value + "; expires="  + dateString;
+            var cookieString3 = "data=" + data + "; expires="  + dateString;
+
+            //Guardamos las variables dentro de la Cookie
+            document.cookie = cookieString1;
+            document.cookie = cookieString2;
+            document.cookie = cookieString3;
+
+            //Guardamos las variables en la sessionStorage
+            sessionStorage.setItem("ID", id);
+            sessionStorage.setItem("value", value);
+            sessionStorage.setItem("data", data);
+
+            console.log(document.cookie);
+            console.log(sessionStorage);
+            console.log(currentDate);
+            console.log(dateString);
+            console.log(currentUrl);
+            console.log(id);
+            console.log(value);
+            console.log(data);
+        });
+
+    </script>
+</body>
+</html>
+
